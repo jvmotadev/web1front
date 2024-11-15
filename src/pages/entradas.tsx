@@ -1,6 +1,14 @@
 import { Layout } from "@/app/layout";
-import { Tabela } from "@/app/tabela";
 import { Chart } from "@/app/piechart";
+import {
+  Table,
+  TableBody,
+  TableHead,
+  TableHeader,
+  TableRow,
+  TableCell
+} from "@/components/ui/table";
+import { ArrowUpToLine } from 'lucide-react';
 
 const Entradas = () => {
   return (
@@ -10,8 +18,27 @@ const Entradas = () => {
         <div className="flex justify-between gap-x-24">
           <h1>Entradas</h1>
         </div>
-        <Tabela/>
-        <Chart/>
+        <div>
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead></TableHead>
+                <TableHead>Valor</TableHead>
+                <TableHead>Tipo</TableHead>
+                <TableHead>Data</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+            <TableRow>
+              <TableCell><ArrowUpToLine color="#0cb436" /></TableCell> 
+              <TableCell>R$820,00</TableCell>
+              <TableCell>Jogos</TableCell>
+              <TableCell>xx/xx/xx</TableCell>
+            </TableRow>
+            </TableBody>
+          </Table>
+        </div>
+        <Chart Title="Entradas"/>
       </main>
     </div>
   );
