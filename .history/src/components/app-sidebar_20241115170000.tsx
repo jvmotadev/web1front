@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   Sidebar,
   SidebarContent,
@@ -10,6 +11,7 @@ import {
 } from "@/components/ui/sidebar";
 import { useSidebar } from "@/components/ui/sidebar";
 import { LayoutDashboard, TrendingDown, TrendingUp } from "lucide-react";
+import { Separator } from '@radix-ui/react-separator';
 
 // Menu items.
 const items = [
@@ -39,6 +41,7 @@ export function AppSidebar() {
         <SidebarGroup>
           <SidebarGroupLabel className='text-2xl mb-6'>Finance.AI</SidebarGroupLabel>
           <SidebarGroupContent>
+            
             <SidebarMenu>
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
