@@ -4,7 +4,7 @@ import { Button } from "./components/ui/button";
 
 export function App() {
   return (
-    <Layout>
+    <Layout classname="text-3xl">
       <div style={{ padding: '20px' }}>
         <h1>Hello from the Main Content!</h1>
         <Button>Hello World</Button>
