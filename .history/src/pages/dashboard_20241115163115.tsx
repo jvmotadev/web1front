@@ -1,9 +1,7 @@
 import React from 'react';
 import { Layout } from "@/app/layout";  // Import the layout you created
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Tabs, TabsList, TabsTrigger, TabsContent } from '@radix-ui/react-tabs';
-import { Transaction } from '@/components/add-transaction';
 
 
 const Dashboard = () => {
@@ -16,17 +14,10 @@ const Dashboard = () => {
       <main className="flex-1 p-6 overflow-auto">
         <div className="flex justify-between">
           <h1 className="text-5xl">Dashboard</h1>
-          <Dialog>
-            <DialogTrigger>Nova Transação</DialogTrigger>
-            <DialogContent>
-                <DialogHeader>
-                    <Transaction/>
-                </DialogHeader>
-            </DialogContent>
-          </Dialog>
+          <Button>Nova Transação</Button>
 
         </div>
-        <div className="flex justify-between gap-x-32 mt-6">
+        <div className="flex justify-between gap-x-24 mt-6">
           <Card className='bg-zinc-900 flex-1 shadow-lg p-2 text-center'>
             <CardHeader>
               <CardTitle className="text-2xl text-lime-500">Entradas</CardTitle>

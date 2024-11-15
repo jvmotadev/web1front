@@ -3,7 +3,6 @@ import { Layout } from "@/app/layout";  // Import the layout you created
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@radix-ui/react-tabs';
-import { Transaction } from '@/components/add-transaction';
 
 
 const Dashboard = () => {
@@ -20,7 +19,15 @@ const Dashboard = () => {
             <DialogTrigger>Nova Transação</DialogTrigger>
             <DialogContent>
                 <DialogHeader>
-                    <Transaction/>
+                <Tabs defaultValue="account" className="flex flex-1 flex-col justify-center">
+                    <TabsList className="bg-transparent py-7">
+                        <TabsTrigger value="account">Entradas</TabsTrigger>
+                        <TabsTrigger value="password">Saidas</TabsTrigger>
+                    </TabsList>
+                    <TabsContent value="account">Make changes to your account here.</TabsContent>
+                    <TabsContent value="password">Change your password here.</TabsContent>
+                </Tabs>
+
                 </DialogHeader>
             </DialogContent>
           </Dialog>

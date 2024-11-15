@@ -1,9 +1,8 @@
 import React from 'react';
 import { Layout } from "@/app/layout";  // Import the layout you created
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Tabs, TabsList, TabsTrigger, TabsContent } from '@radix-ui/react-tabs';
-import { Transaction } from '@/components/add-transaction';
+import { Dialog } from '@/components/ui/dialog';
 
 
 const Dashboard = () => {
@@ -20,7 +19,11 @@ const Dashboard = () => {
             <DialogTrigger>Nova Transação</DialogTrigger>
             <DialogContent>
                 <DialogHeader>
-                    <Transaction/>
+                <DialogTitle>Are you absolutely sure?</DialogTitle>
+                <DialogDescription>
+                    This action cannot be undone. This will permanently delete your account
+                    and remove your data from our servers.
+                </DialogDescription>
                 </DialogHeader>
             </DialogContent>
           </Dialog>

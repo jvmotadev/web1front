@@ -21,6 +21,7 @@ const Dashboard = () => {
             <DialogContent>
                 <DialogHeader>
                     <Transaction/>
+
                 </DialogHeader>
             </DialogContent>
           </Dialog>
