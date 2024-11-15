@@ -16,17 +16,17 @@ import { LayoutDashboard, TrendingDown, TrendingUp } from "lucide-react";
 const items = [
   {
     title: "Dashboard",
-    url: "./",
+    url: "home",
     icon: LayoutDashboard,
   },
   {
     title: "Entradas",
-    url: "./in",
+    url: "in",
     icon: TrendingUp,
   },
   {
     title: "Saidas",
-    url: "./out",
+    url: "out",
     icon: TrendingDown,
   },
 ];

@@ -16,17 +16,17 @@ import { LayoutDashboard, TrendingDown, TrendingUp } from "lucide-react";
 const items = [
   {
     title: "Dashboard",
-    url: "./",
+    url: "home",
     icon: LayoutDashboard,
   },
   {
     title: "Entradas",
-    url: "./in",
+    url: "in",
     icon: TrendingUp,
   },
   {
     title: "Saidas",
-    url: "./out",
+    url: "out",
     icon: TrendingDown,
   },
 ];
@@ -38,7 +38,7 @@ export function AppSidebar() {
     <Sidebar>
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel className='text-2xl mb-6'>Finance.AI</SidebarGroupLabel>
+          <SidebarGroupLabel>Application</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {items.map((item) => (
@@ -48,20 +48,19 @@ export function AppSidebar() {
                       <div
                         className={`transition-all ease-in-out duration-300 ${
                           state === "collapsed"
-                            ? "w-4 h-4" // Smaller size for collapsed state
-                            : "w-8 h-8" // Larger size for expanded state
+                            ? "w-8 h-8" // Smaller size for collapsed state
+                            : "w-12 h-12" // Larger size for expanded state
                         } flex items-center justify-center`}
                       >
                         <item.icon className="w-full h-full" />
                       </div>
-                        <span
-                            className={`text-xl ${
-                                state === "collapsed" ? "hidden" : "inline"
-                            }`}
-                            >
-                            {item.title}
-                        </span>
-
+                      <span
+                        className={`${
+                          state === "collapsed" ? "hidden" : "inline"
+                        }`}
+                      >
+                        {item.title}
+                      </span>
                     </a>
                   </SidebarMenuButton>
                 </SidebarMenuItem>

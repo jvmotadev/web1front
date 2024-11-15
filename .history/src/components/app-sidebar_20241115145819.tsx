@@ -16,17 +16,17 @@ import { LayoutDashboard, TrendingDown, TrendingUp } from "lucide-react";
 const items = [
   {
     title: "Dashboard",
-    url: "./",
+    url: "home",
     icon: LayoutDashboard,
   },
   {
     title: "Entradas",
-    url: "./in",
+    url: "in",
     icon: TrendingUp,
   },
   {
     title: "Saidas",
-    url: "./out",
+    url: "out",
     icon: TrendingDown,
   },
 ];
@@ -55,7 +55,7 @@ export function AppSidebar() {
                         <item.icon className="w-full h-full" />
                       </div>
                         <span
-                            className={`text-xl ${
+                            className={`text-2xl ${
                                 state === "collapsed" ? "hidden" : "inline"
                             }`}
                             >

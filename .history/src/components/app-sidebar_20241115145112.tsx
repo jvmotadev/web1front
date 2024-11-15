@@ -16,17 +16,17 @@ import { LayoutDashboard, TrendingDown, TrendingUp } from "lucide-react";
 const items = [
   {
     title: "Dashboard",
-    url: "./",
+    url: "home",
     icon: LayoutDashboard,
   },
   {
     title: "Entradas",
-    url: "./in",
+    url: "in",
     icon: TrendingUp,
   },
   {
     title: "Saidas",
-    url: "./out",
+    url: "out",
     icon: TrendingDown,
   },
 ];
@@ -38,30 +38,27 @@ export function AppSidebar() {
     <Sidebar>
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel className='text-2xl mb-6'>Finance.AI</SidebarGroupLabel>
+          <SidebarGroupLabel>Application</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
                     <a href={item.url} className="flex items-center gap-2">
-                      <div
-                        className={`transition-all ease-in-out duration-300 ${
+                      <item.icon
+                        className={`sidebar-icon ${
                           state === "collapsed"
-                            ? "w-4 h-4" // Smaller size for collapsed state
-                            : "w-8 h-8" // Larger size for expanded state
-                        } flex items-center justify-center`}
+                            ? "sidebar-collapsed"
+                            : "sidebar-expanded"
+                        }`}
+                      />
+                      <span
+                        className={`${
+                          state === "collapsed" ? "hidden" : "inline"
+                        }`}
                       >
-                        <item.icon className="w-full h-full" />
-                      </div>
-                        <span
-                            className={`text-xl ${
-                                state === "collapsed" ? "hidden" : "inline"
-                            }`}
-                            >
-                            {item.title}
-                        </span>
-
+                        {item.title}
+                      </span>
                     </a>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
