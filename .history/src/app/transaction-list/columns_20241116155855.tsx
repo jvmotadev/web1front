@@ -19,8 +19,7 @@ export type Payment = {
     id: string;
     amount: number;
     status: string;
-    name: string;
-    category: string;
+    email: string;
   };
 
 export const columns: ColumnDef<Payment>[] = [
@@ -49,16 +48,16 @@ export const columns: ColumnDef<Payment>[] = [
   },
   {
     accessorKey: "status",
-    header: () => <div className="text-center">Status</div>,
+    header: "Status",
     cell: ({ row }) => {
       const status = row.getValue("status") as string; // Explicitly cast to string
   
       return (
-        <div  className="flex justify-center">
+        <div >
           {status === "entrada" ? (
-            <ArrowUpToLine className="text-green-500 h-5 w-5" />
+            <ArrowUpToLine className="text-green-500 h-4 w-4" />
           ) : status === "saida" ? (
-            <ArrowDownToLine className="text-red-500 h-5 w-5" />
+            <ArrowDownToLine className="text-red-500 h-4 w-4" />
           ) : (
             <span>{status}</span> // Explicitly typed as string, so ReactNode is valid
           )}
@@ -87,31 +86,20 @@ export const columns: ColumnDef<Payment>[] = [
     },
   },
   {
-    accessorKey: "name",
-    header: ({ column }) => (<div  className="flex justify-center">
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Nome
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      </div>
+    accessorKey: "email",
+    header: ({ column }) => (
+      <Button
+        variant="ghost"
+        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+      >
+        Email
+        <ArrowUpDown className="ml-2 h-4 w-4" />
+      </Button>
     ),
   },
-  {
-    accessorKey: "category",
-    header: ({ column }) => (<div  className="flex justify-center">
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Categoria
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      </div>
-    ),
-  },
+
+  
+
   {
     id: "actions",
     cell: ({ row }) => {

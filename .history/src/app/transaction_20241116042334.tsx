@@ -60,7 +60,7 @@ export function Transaction() {
             </div>
           </CardContent>
           <CardFooter className="flex justify-center">
-            <Button className="flex-1">Salvar Saída</Button>
+            <Button className="flex-1">Save changes</Button>
           </CardFooter>
         </Card>
       </TabsContent>

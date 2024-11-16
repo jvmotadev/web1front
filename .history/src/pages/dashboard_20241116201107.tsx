@@ -15,8 +15,8 @@ const Dashboard = () => {
     <Layout children={undefined}/>
     
 
-      <main className="flex-1 flex-wrap pt-4 px-4 overflow-auto">
-        <div className="flex justify-between px-10 pt-0">
+      <main className="flex-1 flex-wrap p-6 overflow-auto">
+        <div className="flex justify-between px-10 pt-8">
           <h1 className="text-5xl">Dashboard</h1>
           <Dialog>
             <DialogTrigger className="text-xl"><span className="text-2xl text-lime-500">+</span> Nova Transação</DialogTrigger>
@@ -32,7 +32,7 @@ const Dashboard = () => {
           <SummaryCards />
 
         </div>
-        <div className="container mx-auto pt-6">
+        <div className="container mx-auto py-10">
           <DataTable columns={columns} data={staticPayments} />
         </div>
       </main>

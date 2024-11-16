@@ -19,8 +19,7 @@ export type Payment = {
     id: string;
     amount: number;
     status: string;
-    name: string;
-    category: string;
+    email: string;
   };
 
 export const columns: ColumnDef<Payment>[] = [
@@ -87,29 +86,15 @@ export const columns: ColumnDef<Payment>[] = [
     },
   },
   {
-    accessorKey: "name",
-    header: ({ column }) => (<div  className="flex justify-center">
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Nome
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      </div>
-    ),
-  },
-  {
-    accessorKey: "category",
-    header: ({ column }) => (<div  className="flex justify-center">
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Categoria
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      </div>
+    accessorKey: "email",
+    header: ({ column }) => (
+      <Button
+        variant="ghost"
+        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+      >
+        Nome
+        <ArrowUpDown className="ml-2 h-4 w-4" />
+      </Button>
     ),
   },
   {

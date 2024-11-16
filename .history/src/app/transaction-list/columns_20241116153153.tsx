@@ -12,19 +12,17 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { ArrowUpToLine } from 'lucide-react';
-import { ArrowDownToLine } from 'lucide-react';
 
 export type Payment = {
     id: string;
     amount: number;
     status: string;
-    name: string;
-    category: string;
+    email: string;
   };
 
+import { ArrowDownToLine } from 'lucide-react';
+
 export const columns: ColumnDef<Payment>[] = [
-  
   {
     id: "select",
     header: ({ table }) => (
@@ -48,69 +46,42 @@ export const columns: ColumnDef<Payment>[] = [
     enableHiding: false,
   },
   {
+    accessorKey: "email",
+    header: ({ column }) => (
+      <Button
+        variant="ghost"
+        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+      >
+        Email
+        <ArrowUpDown className="ml-2 h-4 w-4" />
+      </Button>
+    ),
+  },
+  {
     accessorKey: "status",
-    header: () => <div className="text-center">Status</div>,
-    cell: ({ row }) => {
-      const status = row.getValue("status") as string; // Explicitly cast to string
-  
-      return (
-        <div  className="flex justify-center">
-          {status === "entrada" ? (
-            <ArrowUpToLine className="text-green-500 h-5 w-5" />
-          ) : status === "saida" ? (
-            <ArrowDownToLine className="text-red-500 h-5 w-5" />
-          ) : (
-            <span>{status}</span> // Explicitly typed as string, so ReactNode is valid
-          )}
-        </div>
-      );
-    },
+    header: "Status",
   },
   {
     accessorKey: "amount",
-    header: ({column}) => (<div  className="flex justify-center">
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+    header: ({ column }) => (
+      <Button
+        className="text-center flex justify-center align-middle"
+        variant="ghost"
+        onClick={() => column.column.toggleSorting(column.column.getIsSorted() === "asc")}
+      >
         Valor
         <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      </div>),
+      </Button>
+    ),
     cell: ({ row }) => {
       const amount = parseFloat(row.getValue("amount"));
       const formatted = new Intl.NumberFormat("pt-BR", {
         style: "currency",
         currency: "BRL",
       }).format(amount);
-
+  
       return <div className="text-center font-medium">{formatted}</div>;
     },
-  },
-  {
-    accessorKey: "name",
-    header: ({ column }) => (<div  className="flex justify-center">
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Nome
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      </div>
-    ),
-  },
-  {
-    accessorKey: "category",
-    header: ({ column }) => (<div  className="flex justify-center">
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Categoria
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      </div>
-    ),
   },
   {
     id: "actions",

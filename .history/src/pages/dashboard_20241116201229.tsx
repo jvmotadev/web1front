@@ -15,7 +15,7 @@ const Dashboard = () => {
     <Layout children={undefined}/>
     
 
-      <main className="flex-1 flex-wrap pt-4 px-4 overflow-auto">
+      <main className="flex-1 flex-wrap p-4 overflow-auto">
         <div className="flex justify-between px-10 pt-0">
           <h1 className="text-5xl">Dashboard</h1>
           <Dialog>

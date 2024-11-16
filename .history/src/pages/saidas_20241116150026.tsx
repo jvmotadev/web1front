@@ -38,7 +38,7 @@ const Saidas = () => {
             </TableBody>
           </Table>
         </div>
-        <Chart />
+        <Chart Title="Saídas" />
       </main>
     </div>
   );
