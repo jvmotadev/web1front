@@ -10,7 +10,7 @@ import { staticPayments } from '@/app/transaction-list/static-data';
 
 const Dashboard = () => {
   return (
-    <div className="flex">
+    <div className="flex ">
         
     <Layout children={undefined}/>
     
@@ -58,10 +58,15 @@ const Dashboard = () => {
 
           </Card>
         </div>
-        <div className="container mx-auto py-10">
-          <DataTable columns={columns} data={staticPayments} />
-        </div>
+
       </main>
+
+
+      <div>
+      <div className="container mx-auto py-10">
+        <DataTable columns={columns} data={staticPayments} />
+      </div>
+      </div>
     </div>
   );
 };

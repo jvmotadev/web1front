@@ -62,6 +62,11 @@ const Dashboard = () => {
           <DataTable columns={columns} data={staticPayments} />
         </div>
       </main>
+
+
+      <div>
+
+      </div>
     </div>
   );
 };

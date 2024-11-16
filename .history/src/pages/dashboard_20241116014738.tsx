@@ -2,15 +2,12 @@ import React from 'react';
 import { Layout } from "@/app/layout";  // Import the layout you created
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogHeader, DialogTrigger } from '@/components/ui/dialog';
-import { Transaction } from '@/app/transaction';
-import { columns } from '@/app/transaction-list/columns';
-import { DataTable } from '@/app/transaction-list/data-table';
-import { staticPayments } from '@/app/transaction-list/static-data';
+import { Transaction } from '@/components/add-transaction';
 
 
 const Dashboard = () => {
   return (
-    <div className="flex">
+    <div className="flex ">
         
     <Layout children={undefined}/>
     
@@ -58,9 +55,7 @@ const Dashboard = () => {
 
           </Card>
         </div>
-        <div className="container mx-auto py-10">
-          <DataTable columns={columns} data={staticPayments} />
-        </div>
+
       </main>
     </div>
   );
