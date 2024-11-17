@@ -2,7 +2,7 @@ import { TableCell, TableRow } from "@/components/ui/table";
 import { ArrowUpToLine } from "lucide-react";
 
 export function ItemTabela() {
-  const amount = 830.0; // Example value
+  const amount = 100.0; // Example value
   const formattedAmount = new Intl.NumberFormat("pt-BR", {
     style: "currency",
     currency: "BRL",

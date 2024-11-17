@@ -9,7 +9,7 @@ import { ItemTabela } from "./entradas-item";
 
 export function Tabela() {
   return (
-    <div>
+    <div className="py-8">
       <Table>
         <TableHeader>
           <TableRow>

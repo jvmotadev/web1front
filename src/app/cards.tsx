@@ -7,20 +7,24 @@ interface SummaryCardProps {
 }
 
 export function SummaryCards() {
-  const data: SummaryCardProps[] = [
-    { title: "Entradas", amount: 700.0, color: "text-lime-500" },
-    { title: "Saídas", amount: 300.0, color: "text-red-500" },
-    { title: "Balanço", amount: 400.0, color: "text-blue-500" },
-  ];
-
-  return (
-    <div className="flex justify-between gap-x-32 mt-6">
-      {data.map((item, index) => (
-        <SummaryCard key={index} {...item} />
-      ))}
-    </div>
-  );
-}
+    const entries = 1500.0; // Example value for Entradas
+    const exits = 300.0; // Example value for Saídas
+    const balance = entries - exits; // Dynamically calculate balance
+  
+    const data: SummaryCardProps[] = [
+      { title: "Entradas", amount: entries, color: "text-lime-500" },
+      { title: "Saídas", amount: exits, color: "text-red-500" },
+      { title: "Balanço", amount: balance, color: "text-blue-500" },
+    ];
+  
+    return (
+      <div className="flex justify-between gap-x-32 mt-6">
+        {data.map((item, index) => (
+          <SummaryCard key={index} {...item} />
+        ))}
+      </div>
+    );
+  }
 
 function SummaryCard({ title, amount, color }: SummaryCardProps) {
   const formattedAmount = new Intl.NumberFormat("pt-BR", {

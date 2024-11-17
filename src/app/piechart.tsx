@@ -49,31 +49,67 @@ const chartConfig = {
 export function Chart() {
   return (
     <Card className="flex flex-col">
-      <CardContent className="flex-1 pb-0">
-        <ChartContainer
-          config={chartConfig}
-          className="mx-auto aspect-square max-h-[250px] pb-0 [&_.recharts-pie-label-text]:fill-foreground"
-        >
-          <PieChart>
-            <Pie data={chartData} dataKey="visitors" label nameKey="browser">
-              <LabelList
-                dataKey="browser"
-                className="fill-background"
-                stroke="none"
-                fontSize={12}
-                formatter={(value: keyof typeof chartConfig) =>
-                  chartConfig[value]?.label
-                }
-              />
-            </Pie>
-          </PieChart>
-        </ChartContainer>
+      <CardContent className="flex-1">
+        <div className="flex flex-row justify-around gap-4"> {/* Flexbox to align side by side */}
+          {/* First Chart */}
+          <ChartContainer
+            config={chartConfig}
+            className="flex-1 aspect-square max-w-[30%] [&_.recharts-pie-label-text]:fill-foreground"
+          >
+            <PieChart>
+              <Pie
+                className="text-lg"
+                data={chartData}
+                dataKey="visitors"
+                label
+                nameKey="browser"
+              >
+                <LabelList
+                  dataKey="browser"
+                  className="fill-background"
+                  stroke="none"
+                  fontSize={24}
+                  formatter={(value: keyof typeof chartConfig) =>
+                    chartConfig[value]?.label
+                  }
+                />
+              </Pie>
+            </PieChart>
+          </ChartContainer>
+
+          {/* Second Chart */}
+          <ChartContainer
+            config={chartConfig}
+            className="flex-1 aspect-square max-w-[30%] [&_.recharts-pie-label-text]:fill-foreground"
+          >
+            <PieChart>
+              <Pie
+                className="text-lg"
+                data={chartData}
+                dataKey="visitors"
+                label
+                nameKey="browser"
+              >
+                <LabelList
+                  dataKey="browser"
+                  className="fill-background"
+                  stroke="none"
+                  fontSize={24}
+                  formatter={(value: keyof typeof chartConfig) =>
+                    chartConfig[value]?.label
+                  }
+                />
+              </Pie>
+            </PieChart>
+          </ChartContainer>
+        </div>
       </CardContent>
+
       <CardFooter className="flex-col gap-2 text-sm">
-        <div className="flex items-center gap-2 font-medium leading-none">
+        <div className="text-xl flex items-center gap-2 font-medium leading-none">
           Entradas por categoria <TrendingUp className="h-4 w-4" />
         </div>
       </CardFooter>
     </Card>
-  )
+  );
 }

@@ -51,7 +51,7 @@ export const columns: ColumnDef<Payment>[] = [
     accessorKey: "status",
     header: () => <div className="text-center">Status</div>,
     cell: ({ row }) => {
-      const status = row.getValue("status") as string; // Explicitly cast to string
+      const status = row.getValue("status") as string;
   
       return (
         <div  className="flex justify-center">
@@ -127,7 +127,7 @@ export const columns: ColumnDef<Payment>[] = [
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuLabel>Actions</DropdownMenuLabel>
+              <DropdownMenuLabel>Opções</DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem
                 onClick={() => navigator.clipboard.writeText(payment.id)}
