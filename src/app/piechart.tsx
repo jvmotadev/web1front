@@ -48,7 +48,7 @@ const chartConfig = {
 
 export function Chart() {
   return (
-    <Card className="flex flex-col">
+    <Card className="border-none flex flex-col">
       <CardContent className="flex-1">
         <div className="flex flex-row justify-around gap-4"> {/* Flexbox to align side by side */}
           {/* First Chart */}

@@ -12,19 +12,10 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { ArrowUpToLine } from 'lucide-react';
-import { ArrowDownToLine } from 'lucide-react';
+import { ArrowUpToLine, ArrowDownToLine } from "lucide-react";
+import { Transaction } from "@/types/transaction"; // Import shared Transaction type
 
-export type Payment = {
-    id: string;
-    amount: number;
-    status: string;
-    name: string;
-    category: string;
-  };
-
-export const columns: ColumnDef<Payment>[] = [
-  
+export const columns: ColumnDef<Transaction>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -48,50 +39,57 @@ export const columns: ColumnDef<Payment>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "status",
+    accessorKey: "type", // Updated to match the "type" field in the API response
     header: () => <div className="text-center">Status</div>,
     cell: ({ row }) => {
-      const status = row.getValue("status") as string;
-  
+      const type = row.getValue("type") as string; // Adjusted field name
       return (
-        <div  className="flex justify-center">
-          {status === "entrada" ? (
+        <div className="flex justify-center">
+          {type === "entrada" ? (
             <ArrowUpToLine className="text-green-500 h-5 w-5" />
-          ) : status === "saida" ? (
+          ) : type === "saida" ? (
             <ArrowDownToLine className="text-red-500 h-5 w-5" />
           ) : (
-            <span>{status}</span> // Explicitly typed as string, so ReactNode is valid
+            <span>{type}</span> // Default fallback
           )}
         </div>
       );
     },
   },
   {
-    accessorKey: "amount",
-    header: ({column}) => (<div  className="flex justify-center">
+    accessorKey: "value", // Changed from "amount" to "value" to match API response
+    header: ({ column }) => (
+      <div className="flex justify-center">
         <Button
           variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
-        Valor
-        <ArrowUpDown className="ml-2 h-4 w-4" />
+          onClick={() =>
+            column.toggleSorting(column.getIsSorted() === "asc")
+          }
+        >
+          Valor
+          <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
-      </div>),
+      </div>
+    ),
     cell: ({ row }) => {
-      const amount = parseFloat(row.getValue("amount"));
+      const value = parseFloat(row.getValue("value")); // Match the "value" field
       const formatted = new Intl.NumberFormat("pt-BR", {
         style: "currency",
         currency: "BRL",
-      }).format(amount);
+      }).format(value);
 
       return <div className="text-center font-medium">{formatted}</div>;
     },
   },
   {
     accessorKey: "name",
-    header: ({ column }) => (<div  className="flex justify-center">
+    header: ({ column }) => (
+      <div className="flex justify-center">
         <Button
           variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          onClick={() =>
+            column.toggleSorting(column.getIsSorted() === "asc")
+          }
         >
           Nome
           <ArrowUpDown className="ml-2 h-4 w-4" />
@@ -101,10 +99,13 @@ export const columns: ColumnDef<Payment>[] = [
   },
   {
     accessorKey: "category",
-    header: ({ column }) => (<div  className="flex justify-center">
+    header: ({ column }) => (
+      <div className="flex justify-center">
         <Button
           variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          onClick={() =>
+            column.toggleSorting(column.getIsSorted() === "asc")
+          }
         >
           Categoria
           <ArrowUpDown className="ml-2 h-4 w-4" />
@@ -115,7 +116,7 @@ export const columns: ColumnDef<Payment>[] = [
   {
     id: "actions",
     cell: ({ row }) => {
-      const payment = row.original;
+      const transaction = row.original;
 
       return (
         <div className="flex justify-end">
@@ -130,7 +131,7 @@ export const columns: ColumnDef<Payment>[] = [
               <DropdownMenuLabel>Opções</DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem
-                onClick={() => navigator.clipboard.writeText(payment.id)}
+                onClick={() => navigator.clipboard.writeText(transaction.id)}
               >
                 Copiar Informações
               </DropdownMenuItem>
