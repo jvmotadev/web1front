@@ -13,11 +13,11 @@ import {
 } from "@/components/ui/chart"
 
 const chartData = [
-  { browser: "chrome", visitors: 275, fill: "var(--color-chrome)" },
-  { browser: "safari", visitors: 200, fill: "var(--color-safari)" },
-  { browser: "firefox", visitors: 187, fill: "var(--color-firefox)" },
-  { browser: "edge", visitors: 173, fill: "var(--color-edge)" },
-  { browser: "other", visitors: 90, fill: "var(--color-other)" },
+  { category: "chrome", visitors: 275, fill: "var(--color-chrome)" },
+  { category: "safari", visitors: 200, fill: "var(--color-safari)" },
+  { category: "firefox", visitors: 187, fill: "var(--color-firefox)" },
+  { category: "edge", visitors: 173, fill: "var(--color-edge)" },
+  { category: "other", visitors: 90, fill: "var(--color-other)" },
 ]
 
 const chartConfig = {
@@ -62,10 +62,10 @@ export function Chart() {
                 data={chartData}
                 dataKey="visitors"
                 label
-                nameKey="browser"
+                nameKey="category"
               >
                 <LabelList
-                  dataKey="browser"
+                  dataKey="category"
                   className="fill-background"
                   stroke="none"
                   fontSize={24}
@@ -88,10 +88,10 @@ export function Chart() {
                 data={chartData}
                 dataKey="visitors"
                 label
-                nameKey="browser"
+                nameKey="category"
               >
                 <LabelList
-                  dataKey="browser"
+                  dataKey="category"
                   className="fill-background"
                   stroke="none"
                   fontSize={24}

@@ -11,15 +11,7 @@ import { columns } from "@/app/transaction-list/columns";
 import { DataTable } from "@/app/transaction-list/data-table";
 import { TransactionList } from "@/app/transaction-list/transaction-list";
 import { Transaction as TransactionType } from "@/types/transaction";
-import { SummaryCards } from "@/app/cards";
-
-interface Transaction {
-  id: string;
-  amount: number;
-  status: string;
-  name: string;
-  category: string;
-}
+import { SummaryCards } from "@/app/cards/cards";
 
 const Dashboard = () => {
   // Explicitly type the state to ensure TypeScript understands its structure

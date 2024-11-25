@@ -1,5 +1,5 @@
 import { Layout } from "@/app/layout";
-import { Chart } from "@/app/piechart";
+import { Chart } from "@/components/charts/piechart";
 import {
   Table,
   TableBody,

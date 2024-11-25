@@ -1,6 +1,6 @@
 import { Layout } from "@/app/layout";
 import { Tabela } from "@/app/tabela";
-import { Chart } from "@/app/piechart";
+import { Chart } from "@/components/charts/piechart";
 
 const Entradas = () => {
   return (
