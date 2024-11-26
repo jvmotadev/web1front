@@ -32,7 +32,7 @@ const generateChartConfig = (data: Record<string, { category: string }>, colors:
     return config;
   }, {} as Record<string, { label: string; color: string }>);
 
-export function Chart() {
+export function EntriesChart() { // Changed from Chart to EntriesChart
   const { transactions, loading, error } = useTransactions(); // Use the custom hook
 
   if (loading) {
@@ -43,9 +43,8 @@ export function Chart() {
     return <p>Error loading transactions: {error.message}</p>; // Show error state
   }
 
-  // Split transactions into entries and exits
+  // Filter transactions for entries only
   const entries = transactions.filter((transaction) => transaction.type === "entrada");
-  const exits = transactions.filter((transaction) => transaction.type === "saida");
 
   // Process transactions for chart data
   const processChartData = (transactions: typeof entries) =>
@@ -59,11 +58,9 @@ export function Chart() {
     }, {} as Record<string, { category: string; totalValue: number }>);
 
   const entriesData = processChartData(entries);
-  const exitsData = processChartData(exits);
 
-  // Calculate total value for entries and exits
+  // Calculate total value for entries
   const totalEntriesValue = Object.values(entriesData).reduce((sum, { totalValue }) => sum + totalValue, 0);
-  const totalExitsValue = Object.values(exitsData).reduce((sum, { totalValue }) => sum + totalValue, 0);
 
   // Prepare chart data with percentages
   const prepareChartData = (data: typeof entriesData, totalValue: number) =>
@@ -74,24 +71,42 @@ export function Chart() {
     }));
 
   const entriesChartData = prepareChartData(entriesData, totalEntriesValue);
-  const exitsChartData = prepareChartData(exitsData, totalExitsValue);
 
   const entriesChartConfig: ChartConfig = {
     totalValue: { label: "Total Value" },
     ...generateChartConfig(entriesData, chartColors),
   };
 
-  const exitsChartConfig: ChartConfig = {
-    totalValue: { label: "Total Value" },
-    ...generateChartConfig(exitsData, chartColors),
-  };
-
   return (
     <Card className="border-none flex flex-col">
-      <CardContent className="flex-1">
-        <div className="flex flex-row justify-around gap-4">
-          {/* Chart for Entries */}
-          <ChartContainer
+    <CardContent className="flex-1">
+      <div className="flex flex-row justify-around gap-4">
+        {/* Chart for Entries */}
+        <ChartContainer
+          config={entriesChartConfig}
+          className="flex-1 aspect-square max-w-[30%] [&_.recharts-pie-label-text]:fill-foreground"
+        >
+          <PieChart>
+            <Pie
+              className="text-base"
+              data={entriesChartData}
+              dataKey="totalValue"
+              label={({ percentage }) => `${percentage}%`} // Show only the percentage
+              nameKey="category"
+              outerRadius="80%"
+            >
+              <LabelList
+                dataKey="category"
+                className="fill-background"
+                stroke="none"
+                fontSize={18}
+              />
+            </Pie>
+          </PieChart>
+        </ChartContainer>
+
+        {/* Chart for Exits */}
+        <ChartContainer
             config={entriesChartConfig}
             className="flex-1 aspect-square max-w-[30%] [&_.recharts-pie-label-text]:fill-foreground"
           >
@@ -113,38 +128,14 @@ export function Chart() {
               </Pie>
             </PieChart>
           </ChartContainer>
+      </div>
+    </CardContent>
 
-          {/* Chart for Exits */}
-          <ChartContainer
-            config={exitsChartConfig}
-            className="flex-1 aspect-square max-w-[30%] [&_.recharts-pie-label-text]:fill-foreground"
-          >
-            <PieChart>
-              <Pie
-                className="text-base"
-                data={exitsChartData}
-                dataKey="totalValue"
-                label={({ percentage }) => `${percentage}%`} // Show only the percentage
-                nameKey="category"
-                outerRadius="80%"
-              >
-                <LabelList
-                  dataKey="category"
-                  className="fill-background"
-                  stroke="none"
-                  fontSize={18}
-                />
-              </Pie>
-            </PieChart>
-          </ChartContainer>
-        </div>
-      </CardContent>
-
-      <CardFooter className="flex-col gap-2 text-sm">
-        <div className="text-xl flex items-center gap-2 font-medium leading-none">
-          Entradas e Saídas por Categoria <TrendingUp className="h-4 w-4" />
-        </div>
-      </CardFooter>
-    </Card>
+    <CardFooter className="flex-col gap-2 text-sm">
+      <div className="text-xl flex items-center gap-2 font-medium leading-none">
+        Entradas por Categoria <TrendingUp className="h-4 w-4" />
+      </div>
+    </CardFooter>
+  </Card>
   );
 }

@@ -1,5 +1,5 @@
 import { Layout } from "@/app/layout";
-import { Chart } from "@/components/charts/piechart";
+import { ExitChart } from "@/components/charts/exits";
 import {
   Table,
   TableBody,
@@ -38,7 +38,7 @@ const Saidas = () => {
             </TableBody>
           </Table>
         </div>
-        <Chart />
+        <ExitChart/>
       </main>
     </div>
   );

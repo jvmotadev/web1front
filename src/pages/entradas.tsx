@@ -1,6 +1,6 @@
 import { Layout } from "@/app/layout";
 import { Tabela } from "@/app/tabela";
-import { Chart } from "@/components/charts/piechart";
+import { EntriesChart } from "@/components/charts/entries";
 
 const Entradas = () => {
   return (
@@ -11,7 +11,8 @@ const Entradas = () => {
           <h1 className="text-5xl">Entradas</h1>
         </div>
         <Tabela/>
-        <Chart/>
+
+        <EntriesChart />
       </main>
     </div>
   );
