@@ -1,4 +1,5 @@
 import { Layout } from "@/app/layout";
+import { DailyExpenses } from "@/components/charts/daily-expenses";
 import { ExitChart } from "@/components/charts/exits";
 import {
   Table,
@@ -39,6 +40,9 @@ const Saidas = () => {
           </Table>
         </div>
         <ExitChart/>
+
+        <DailyExpenses/>
+
       </main>
     </div>
   );
