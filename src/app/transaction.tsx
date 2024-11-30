@@ -48,9 +48,25 @@ export function Transaction() {
                         <SelectValue placeholder="Selecione uma categoria" />
                     </SelectTrigger>
                     <SelectContent>
-                        <SelectItem value="roupa">Roupas</SelectItem>
-                        <SelectItem value="viagem">Viagens</SelectItem>
-                        <SelectItem value="transporte">Transporte</SelectItem>
+                      <SelectItem value="alimentacao">Alimentação</SelectItem>
+                      <SelectItem value="transporte">Transporte</SelectItem>
+                      <SelectItem value="roupas">Roupas</SelectItem>
+                      <SelectItem value="moradia">Moradia</SelectItem>
+                      <SelectItem value="saude">Saúde</SelectItem>
+                      <SelectItem value="educacao">Educação</SelectItem>
+                      <SelectItem value="lazer">Lazer</SelectItem>
+                      <SelectItem value="entretenimento">Entretenimento</SelectItem>
+                      <SelectItem value="contas">Contas</SelectItem>
+                      <SelectItem value="assinaturas">Assinaturas</SelectItem>
+                      <SelectItem value="impostos">Impostos</SelectItem>
+                      <SelectItem value="investimentos">Investimentos</SelectItem>
+                      <SelectItem value="viagens">Viagens</SelectItem>
+                      <SelectItem value="pets">Pets</SelectItem>
+                      <SelectItem value="tecnologia">Tecnologia</SelectItem>
+                      <SelectItem value="dividas">Dívidas</SelectItem>
+                      <SelectItem value="doacoes">Doações</SelectItem>
+                      <SelectItem value="presentes">Presentes</SelectItem>
+
                     </SelectContent>
                 </Select>
             </div>
@@ -88,9 +104,9 @@ export function Transaction() {
                         <SelectValue placeholder="Selecione uma categoria" />
                     </SelectTrigger>
                     <SelectContent>
-                        <SelectItem value="roupa">Salário</SelectItem>
-                        <SelectItem value="viagem">Freelance</SelectItem>
-                        <SelectItem value="transporte">OLX</SelectItem>
+                        <SelectItem value="salario">Salário</SelectItem>
+                        <SelectItem value="freelance">Freelance</SelectItem>
+                        <SelectItem value="venda_usados">OLX</SelectItem>
                     </SelectContent>
                 </Select>
             </div>

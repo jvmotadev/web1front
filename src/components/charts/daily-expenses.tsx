@@ -75,8 +75,10 @@ export function DailyExpenses() {
     [filteredTransactions]
   );
 
-  // Convert aggregated data to array
-  const chartData = Object.values(aggregatedData);
+  const chartData = Object.values(aggregatedData).sort(
+    (a, b) => new globalThis.Date(a.date).getTime() - new globalThis.Date(b.date).getTime()
+  );
+  
 
   // Calculate overall totals for buttons
   const total = React.useMemo(
