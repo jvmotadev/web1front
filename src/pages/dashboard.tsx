@@ -6,7 +6,7 @@ import {
   DialogHeader,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Transaction } from "@/app/transaction";
+import { Transaction } from "@/app/create-transaction/transaction";
 import { columns } from "@/app/transaction-list/columns";
 import { DataTable } from "@/app/transaction-list/data-table";
 import { TransactionList } from "@/app/transaction-list/transaction-list";
