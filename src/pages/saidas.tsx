@@ -1,17 +1,17 @@
+import { useState } from "react";
 import { Layout } from "@/app/layout";
-import { DailyExpenses } from "@/components/charts/daily-expenses";
-import { ExitChart } from "@/components/charts/exits";
-import {
-  Table,
-  TableBody,
-  TableHead,
-  TableHeader,
-  TableRow,
-  TableCell
-} from "@/components/ui/table";
-import { ArrowDownToLine } from 'lucide-react';
+import { createColumns } from "@/app/transaction-list/columns";
+import { DataTable } from "@/app/transaction-list/data-table";
+import { TransactionList } from "@/app/transaction-list/transaction-list";
+import { Transaction as TransactionType } from "@/types/transaction";
 
 const Saidas = () => {
+  const [transactions, setTransactions] = useState<TransactionType[]>([]);
+
+   // Filter transactions for entries only
+  const exits = transactions.filter((transaction) => transaction.type === "saida");
+  const columnsWithoutSelect = createColumns(false, false);
+
   return (
     <div className="flex ">
       <Layout children={undefined} />
@@ -19,29 +19,12 @@ const Saidas = () => {
         <div className="flex justify-between gap-x-24">
           <h1 className="text-5xl">Saídas</h1>
         </div>
-        <div>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead></TableHead>
-                <TableHead>Valor</TableHead>
-                <TableHead>Tipo</TableHead>
-                <TableHead>Data</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-            <TableRow>
-              <TableCell><ArrowDownToLine color="#940707" /></TableCell> 
-              <TableCell>R$820,00</TableCell>
-              <TableCell>Jogos</TableCell>
-              <TableCell>xx/xx/xx</TableCell>
-            </TableRow>
-            </TableBody>
-          </Table>
+        <div className="container mx-auto pt-6">
+          {/* Fetch transactions dynamically */}
+          <TransactionList onDataLoaded={setTransactions} />
+          {/* Pass the transactions to the DataTable */}
+          <DataTable columns={columnsWithoutSelect} data={exits} pageSize={17}/>
         </div>
-        <ExitChart/>
-
-        <DailyExpenses/>
 
       </main>
     </div>

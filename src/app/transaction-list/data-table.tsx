@@ -28,15 +28,13 @@ import {
 interface DataTableProps<TData> {
   columns: ColumnDef<TData>[];
   data: TData[];
+  pageSize?: number; // Adiciona uma prop opcional para o tamanho da página
 }
 
-export function DataTable<TData>({ columns, data }: DataTableProps<TData>) {
+export function DataTable<TData>({ columns, data, pageSize = 10 }: DataTableProps<TData>) { // Define um valor padrão de 10
   const [sorting, setSorting] = React.useState<SortingState>([]);
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    []
-  );
-  const [columnVisibility, setColumnVisibility] =
-    React.useState<VisibilityState>({});
+  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
+  const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
 
   const table = useReactTable({
@@ -55,6 +53,11 @@ export function DataTable<TData>({ columns, data }: DataTableProps<TData>) {
       columnFilters,
       columnVisibility,
       rowSelection,
+    },
+    initialState: {
+      pagination: {
+        pageSize: pageSize, // Usa a prop passada
+      },
     },
   });
 

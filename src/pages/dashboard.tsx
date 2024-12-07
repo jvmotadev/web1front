@@ -7,7 +7,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Transaction } from "@/app/create-transaction/transaction";
-import { columns } from "@/app/transaction-list/columns";
+import { createColumns } from "@/app/transaction-list/columns";
 import { DataTable } from "@/app/transaction-list/data-table";
 import { TransactionList } from "@/app/transaction-list/transaction-list";
 import { Transaction as TransactionType } from "@/types/transaction";
@@ -16,6 +16,7 @@ import { SummaryCards } from "@/app/cards/cards";
 const Dashboard = () => {
   // Explicitly type the state to ensure TypeScript understands its structure
   const [transactions, setTransactions] = useState<TransactionType[]>([]);
+  const columnsWithSelect = createColumns(true, true);
 
   return (
     <div className="flex">
@@ -41,7 +42,8 @@ const Dashboard = () => {
           {/* Fetch transactions dynamically */}
           <TransactionList onDataLoaded={setTransactions} />
           {/* Pass the transactions to the DataTable */}
-          <DataTable columns={columns} data={transactions} />
+          
+          <DataTable columns={columnsWithSelect} data={transactions} pageSize={10} />
         </div>
       </main>
     </div>
