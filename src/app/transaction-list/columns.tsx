@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { ArrowUpToLine, ArrowDownToLine } from "lucide-react";
 import { Transaction } from "@/types/transaction"; // Import shared Transaction type
+import { deleteTransaction } from "./delete-transaction";
 
 export const columns: ColumnDef<Transaction>[] = [
   {
@@ -39,10 +40,10 @@ export const columns: ColumnDef<Transaction>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "type", // Updated to match the "type" field in the API response
+    accessorKey: "type",
     header: () => <div className="text-center">Status</div>,
     cell: ({ row }) => {
-      const type = row.getValue("type") as string; // Adjusted field name
+      const type = row.getValue("type") as string;
       return (
         <div className="flex justify-center">
           {type === "entrada" ? (
@@ -50,14 +51,14 @@ export const columns: ColumnDef<Transaction>[] = [
           ) : type === "saida" ? (
             <ArrowDownToLine className="text-red-500 h-5 w-5" />
           ) : (
-            <span>{type}</span> // Default fallback
+            <span>{type}</span>
           )}
         </div>
       );
     },
   },
   {
-    accessorKey: "value", // Changed from "amount" to "value" to match API response
+    accessorKey: "value",
     header: ({ column }) => (
       <div className="flex justify-center">
         <Button
@@ -72,7 +73,7 @@ export const columns: ColumnDef<Transaction>[] = [
       </div>
     ),
     cell: ({ row }) => {
-      const value = parseFloat(row.getValue("value")); // Match the "value" field
+      const value = parseFloat(row.getValue("value"));
       const formatted = new Intl.NumberFormat("pt-BR", {
         style: "currency",
         currency: "BRL",
@@ -118,6 +119,19 @@ export const columns: ColumnDef<Transaction>[] = [
     cell: ({ row }) => {
       const transaction = row.original;
 
+      const handleDelete = async () => {
+        if (window.confirm("Tem certeza que deseja deletar esta transação?")) {
+          try {
+            await deleteTransaction(transaction.id);
+            alert("Transação deletada com sucesso!");
+            window.location.reload(); // Recarregar a página para refletir a exclusão (pode ser substituído por atualização de estado)
+          } catch (error) {
+            alert("Erro ao deletar a transação.");
+            console.error(error);
+          }
+        }
+      };
+
       return (
         <div className="flex justify-end">
           <DropdownMenu>
@@ -136,7 +150,9 @@ export const columns: ColumnDef<Transaction>[] = [
                 Copiar Informações
               </DropdownMenuItem>
               <DropdownMenuItem>Editar</DropdownMenuItem>
-              <DropdownMenuItem>Deletar</DropdownMenuItem>
+              <DropdownMenuItem onClick={handleDelete}>
+                Deletar
+              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
