@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   Sidebar,
   SidebarContent,
@@ -10,7 +9,7 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { useSidebar } from "@/components/ui/sidebar";
-import { LayoutDashboard, TrendingDown, TrendingUp } from "lucide-react";
+import { LayoutDashboard, TrendingDown, TrendingUp, ChartNoAxesCombined } from "lucide-react";
 
 // Menu items.
 const items = [
@@ -28,6 +27,11 @@ const items = [
     title: "Saidas",
     url: "./out",
     icon: TrendingDown,
+  },
+  {
+    title: "Charts",
+    url: "./charts",
+    icon: ChartNoAxesCombined,
   },
 ];
 
