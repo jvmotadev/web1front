@@ -1,6 +1,7 @@
 import { Layout } from "@/app/layout";
 import { DailyExpenses } from "@/components/charts/daily-expenses";
 import { ExitChart } from "@/components/charts/exits";
+import { EntriesChart } from "@/components/charts/entries";
 
 const Graphs = () => {
   return (
@@ -12,6 +13,7 @@ const Graphs = () => {
         </div>
 
         <ExitChart/>
+        <EntriesChart />
 
         <DailyExpenses/>
 
