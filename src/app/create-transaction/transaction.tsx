@@ -67,9 +67,18 @@ export function Transaction() {
                 placeholder="25.90"
                 value={formData.value === 0 ? "" : formData.value} // Show blank when value is 0
                 onChange={(e) => {
-                  const inputValue = e.target.value.replace(",", "."); // Handle comma as decimal separator
-                  if (!isNaN(Number(inputValue)) || inputValue === "") {
-                    handleInputChange("value", inputValue === "" ? 0 : parseFloat(inputValue));
+                  const rawInput = e.target.value; // Valor bruto inserido
+                  const inputValue = rawInput.replace(",", "."); // Substitui vírgula por ponto
+
+                  // Regex para validar números decimais (permite ponto sem números após ele)
+                  const decimalRegex = /^-?\d*(\.\d*)?$/;
+                  const isValid = decimalRegex.test(inputValue);
+
+                  if (isValid || inputValue === "") {
+                    // Atualiza o valor, mas não converte para número até ser completo
+                    const parsedValue =
+                      inputValue === "" ? 0 : inputValue === "." || inputValue.endsWith(".") ? inputValue : parseFloat(inputValue);
+                    handleInputChange("value", parsedValue);
                   }
                 }}
               />
@@ -124,7 +133,7 @@ export function Transaction() {
         </Card>
       </TabsContent>
       <TabsContent value="entrada">
-      <Card>
+        <Card>
           <CardHeader>
             <CardTitle>Entradas</CardTitle>
             <CardDescription>
@@ -132,37 +141,72 @@ export function Transaction() {
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-2">
-          <div className="space-y-1">
+            <div className="space-y-1">
               <Label htmlFor="name">Nome</Label>
-              <Input id="name" placeholder="Pagamento " />
+              <Input
+                id="name"
+                placeholder="Pagamento"
+                value={formData.name}
+                onChange={(e) => handleInputChange("name", e.target.value)}
+              />
             </div>
             <div className="space-y-1">
-                <Label htmlFor="value">Valor</Label>
-                <Input id="value" placeholder="25,90" />
+              <Label htmlFor="value">Valor</Label>
+              <Input
+                id="value"
+                placeholder="25.90"
+                value={formData.value === 0 ? "" : formData.value} // Show blank when value is 0
+                onChange={(e) => {
+                  const rawInput = e.target.value; // Valor bruto inserido
+                  const inputValue = rawInput.replace(",", "."); // Substitui vírgula por ponto
+
+                  // Regex para validar números decimais (permite ponto sem números após ele)
+                  const decimalRegex = /^-?\d*(\.\d*)?$/;
+                  const isValid = decimalRegex.test(inputValue);
+
+                  if (isValid || inputValue === "") {
+                    // Atualiza o valor, mas não converte para número até ser completo
+                    const parsedValue =
+                      inputValue === "" ? 0 : inputValue === "." || inputValue.endsWith(".") ? inputValue : parseFloat(inputValue);
+                    handleInputChange("value", parsedValue);
+                  }
+                }}
+              />
             </div>
             <div className="space-y-1">
-                <Label htmlFor="category">Categoria</Label>
-                <Select>
-                    <SelectTrigger className="flex-1">
-                        <SelectValue placeholder="Selecione uma categoria" />
-                    </SelectTrigger>
-                    <SelectContent>
-                        <SelectItem value="roupa">Salário</SelectItem>
-                        <SelectItem value="viagem">Freelance</SelectItem>
-                        <SelectItem value="transporte">OLX</SelectItem>
-                    </SelectContent>
-                </Select>
+              <Label htmlFor="category">Categoria</Label>
+              <Select
+                onValueChange={(value) => handleInputChange("category", value)}
+                value={formData.category}
+              >
+                <SelectTrigger className="flex-1">
+                  <SelectValue placeholder="Selecione uma categoria" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="salario">Salário</SelectItem>
+                  <SelectItem value="freelance">Freelance</SelectItem>
+                  <SelectItem value="usados">OLX</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
             <div className="space-y-1">
-                <Label htmlFor="description">Descrição</Label>
-                <Input id="description" placeholder="Detalhes sobre esta saída" />
+              <Label htmlFor="description">Descrição</Label>
+              <Input
+                id="description"
+                placeholder="Detalhes sobre esta entrada"
+                value={formData.description}
+                onChange={(e) => handleInputChange("description", e.target.value)}
+              />
             </div>
           </CardContent>
           <CardFooter>
-            <Button className="flex-1">Salvar Entrada</Button>
+            <Button className="flex-1" onClick={handleSubmit}>
+              Salvar Entrada
+            </Button>
           </CardFooter>
         </Card>
       </TabsContent>
+
     </Tabs>
   );
 }
