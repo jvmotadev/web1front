@@ -2,7 +2,14 @@
 
 import { useTransactions } from "@/app/cards/cards-information"; // Import the hook
 import { TrendingUp } from "lucide-react";
-import { LabelList, Pie, PieChart } from "recharts";
+import {
+  Bar,
+  BarChart,
+  CartesianGrid,
+  LabelList,
+  XAxis,
+  YAxis,
+} from "recharts";
 import {
   Card,
   CardContent,
@@ -11,6 +18,8 @@ import {
 import {
   ChartConfig,
   ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
 } from "@/components/ui/chart";
 
 // Map chart colors from index.css
@@ -21,16 +30,6 @@ const chartColors = [
   "hsl(var(--chart-4))",
   "hsl(var(--chart-5))",
 ];
-
-// Generate dynamic chart config
-const generateChartConfig = (data: Record<string, { category: string }>, colors: string[]) =>
-  Object.keys(data).reduce((config, category, index) => {
-    config[category] = {
-      label: category,
-      color: colors[index % colors.length],
-    };
-    return config;
-  }, {} as Record<string, { label: string; color: string }>);
 
 export function ExitChart() {
   const { transactions, loading, error } = useTransactions(); // Use the custom hook
@@ -62,80 +61,116 @@ export function ExitChart() {
   // Calculate total value for exits
   const totalExitsValue = Object.values(exitsData).reduce((sum, { totalValue }) => sum + totalValue, 0);
 
+  // Round up the maximum value to the nearest thousand
+  const maxExitValue = Math.ceil(
+    Math.max(...Object.values(exitsData).map(({ totalValue }) => totalValue)) / 1000
+  ) * 1000;
+
   // Prepare chart data with percentages
   const prepareChartData = (data: typeof exitsData, totalValue: number) =>
     Object.values(data).map((item, index) => ({
       ...item,
-      percentage: totalValue ? ((item.totalValue / totalValue) * 100).toFixed(0) : 0, // Calculate percentage with no decimal places
+      percentage: totalValue ? ((item.totalValue / totalValue) * 100).toFixed(0) : 0, // Calculate percentage
       fill: chartColors[index % chartColors.length], // Cycle through colors
     }));
 
   const exitsChartData = prepareChartData(exitsData, totalExitsValue);
 
   const exitsChartConfig: ChartConfig = {
-    totalValue: { label: "Total Value" },
-    ...generateChartConfig(exitsData, chartColors),
+    category: { label: "Category", color: "hsl(var(--chart-label))" },
   };
 
   return (
-    <Card className="border-none flex flex-col">
-    <CardContent className="flex-1">
-      <div className="flex flex-row justify-around gap-4">
-        {/* Chart for Entries */}
-        <ChartContainer
-            config={exitsChartConfig}
-            className="flex-1 aspect-square max-w-[30%] [&_.recharts-pie-label-text]:fill-foreground"
+    <Card>
+      <CardContent>
+        <ChartContainer config={exitsChartConfig}>
+          <BarChart
+            accessibilityLayer
+            data={exitsChartData}
+            layout="vertical"
+            margin={{
+              right: 16,
+            }}
           >
-            <PieChart>
-              <Pie
-                className="text-base"
-                data={exitsChartData}
-                dataKey="totalValue"
-                label={({ percentage }) => `${percentage}%`} // Show only the percentage
-                nameKey="category"
-                outerRadius="80%"
-              >
-                <LabelList
-                  dataKey="category"
-                  className="fill-background"
-                  stroke="none"
-                  fontSize={18}
+            <CartesianGrid horizontal={false} />
+            <YAxis
+              dataKey="category"
+              type="category"
+              tickLine={false}
+              fontSize={16}
+              tickMargin={10}
+              axisLine={false}
+              width={150}
+              tickFormatter={(value) =>
+                value.charAt(0).toUpperCase() + value.slice(1).toLowerCase()
+              }
+            />
+            <XAxis
+              type="number"
+              domain={[0, maxExitValue]} // Adjust the domain to the max value
+              tickFormatter={(value) => value.toLocaleString("pt-BR")} // Format the value
+            />
+            <ChartTooltip
+              content={
+                <ChartTooltipContent
+                  className="w-[150px]"
+                  labelFormatter={(value) => {
+                    if (typeof value === "string") {
+                      return `Categoria: ${value}`;
+                    }
+                    return value;
+                  }}
+                  formatter={(
+                    value: string | number | (string | number)[] | null | undefined,
+                    _name: string | number | undefined,
+                    props: any
+                  ) => {
+                    if (typeof value === "number") {
+                      const percentage = props.payload.percentage;
+                      return [
+                        `${new Intl.NumberFormat("pt-BR", {
+                          style: "currency",
+                          currency: "BRL",
+                        }).format(value)} (${percentage}%)`,
+                        
+                      ];
+                    }
+                    return value;
+                  }}
                 />
-              </Pie>
-            </PieChart>
-          </ChartContainer>
-
-        {/* Chart for Exits */}
-        <ChartContainer
-          config={exitsChartConfig}
-          className="flex-1 aspect-square max-w-[30%] [&_.recharts-pie-label-text]:fill-foreground"
-        >
-          <PieChart>
-            <Pie
-              className="text-base"
-              data={exitsChartData}
+              }
+            />
+            <Bar
               dataKey="totalValue"
-              label={({ percentage }) => `${percentage}%`} // Show only the percentage
-              nameKey="category"
-              outerRadius="80%"
+              layout="vertical"
+              fill="var(--color-desktop)"
+              radius={4}
             >
               <LabelList
-                dataKey="category"
-                className="fill-background"
-                stroke="none"
-                fontSize={18}
+                dataKey="totalValue"
+                position="right"
+                offset={8}
+                formatter={(value: number) =>
+                  new Intl.NumberFormat("pt-BR", {
+                    style: "currency",
+                    currency: "BRL",
+                  }).format(value)
+                } // Show value in BRL format
+                className="fill-foreground"
+                fontSize={16}
               />
-            </Pie>
-          </PieChart>
+            </Bar>
+          </BarChart>
         </ChartContainer>
-      </div>
-    </CardContent>
-
-    <CardFooter className="flex-col gap-2 text-sm">
-      <div className="text-xl flex items-center gap-2 font-medium leading-none">
-        Saídas por Categoria <TrendingUp className="h-4 w-4" />
-      </div>
-    </CardFooter>
-  </Card>
+      </CardContent>
+      <CardFooter className="flex-col items-start gap-2 text-sm">
+        <div className="flex gap-2 font-lg leading-none">
+          Saídas por Categoria <TrendingUp className="h-4 w-4" />
+        </div>
+        <div className="leading-none text-muted-foreground">
+          Mostrando valores reais e porcentagens de contribuição de saídas por categoria.
+        </div>
+      </CardFooter>
+    </Card>
   );
 }
