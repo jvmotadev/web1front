@@ -114,6 +114,29 @@ export const columns: ColumnDef<Transaction>[] = [
     ),
   },
   {
+    accessorKey: "date",
+    header: ({ column }) => (
+      <div className="flex justify-center">
+        <Button
+          variant="ghost"
+          onClick={() =>
+            column.toggleSorting(column.getIsSorted() === "asc")
+          }
+        >
+          Data
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      </div>
+    ),
+    cell: ({ row }) => {
+      const rawDate = row.getValue("date") as string; // Informe que o valor é uma string
+      const date = new Date(rawDate); // Converta a string para Date
+      const formatted = new Intl.DateTimeFormat("pt-BR").format(date); // Formata a data
+    
+      return <div className="text-center font-medium">{formatted}</div>;
+    },    
+  },
+  {
     id: "actions",
     cell: ({ row }) => {
       const transaction = row.original;
