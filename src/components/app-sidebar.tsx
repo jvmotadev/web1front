@@ -9,7 +9,7 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { useSidebar } from "@/components/ui/sidebar";
-import { LayoutDashboard, TrendingDown, TrendingUp, ChartNoAxesCombined } from "lucide-react";
+import { LayoutDashboard, TrendingDown, TrendingUp, ChartNoAxesCombined, Bot } from "lucide-react";
 
 // Menu items.
 const items = [
@@ -32,6 +32,11 @@ const items = [
     title: "Charts",
     url: "./charts",
     icon: ChartNoAxesCombined,
+  },
+  {
+    title: "FinanceAI",
+    url: "./ai",
+    icon: Bot,
   },
 ];
 
