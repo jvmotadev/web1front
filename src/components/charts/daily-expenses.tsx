@@ -131,7 +131,7 @@ export function DailyExpenses() {
       <CardContent className="px-2 sm:p-6">
         <ChartContainer
           config={chartConfig}
-          className="aspect-auto h-[250px] w-full"
+          className="aspect-auto h-[450px] w-full"
         >
           <BarChart
             accessibilityLayer

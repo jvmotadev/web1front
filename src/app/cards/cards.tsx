@@ -49,7 +49,7 @@ function SummaryCard({ title, amount, color }: { title: string; amount: number; 
       <CardHeader>
         <CardTitle className={`text-2xl ${color}`}>{title}</CardTitle>
       </CardHeader>
-      <CardContent>
+      <CardContent className="pt-0">
         <div className="flex flex-row justify-center items-center">
           <div>
             <span className="text-4xl font-medium">{formattedAmount}</span>

@@ -83,7 +83,7 @@ export function ExitChart() {
   return (
     <Card>
       <CardContent>
-        <ChartContainer config={exitsChartConfig}>
+        <ChartContainer config={exitsChartConfig} className="w-full  h-[650px]">
           <BarChart
             accessibilityLayer
             data={exitsChartData}
@@ -164,8 +164,9 @@ export function ExitChart() {
         </ChartContainer>
       </CardContent>
       <CardFooter className="flex-col items-start gap-2 text-sm">
-        <div className="flex gap-2 font-lg leading-none">
-          Saídas por Categoria <TrendingUp className="h-4 w-4" />
+        <div className="flex gap-2 leading-none">
+          <span className="text-2xl">Saídas por Categoria</span> 
+          <TrendingUp className="h-8 w-8" />
         </div>
         <div className="leading-none text-muted-foreground">
           Mostrando valores reais e porcentagens de contribuição de saídas por categoria.

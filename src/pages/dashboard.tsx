@@ -35,7 +35,7 @@ const Dashboard = () => {
             </DialogContent>
           </Dialog>
         </div>
-        <div className="flex justify-center gap-x-32 mt-6">
+        <div className="flex justify-center gap-x-32">
           <SummaryCards />
         </div>
         <div className="container mx-auto pt-6">
