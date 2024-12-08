@@ -29,9 +29,10 @@ interface DataTableProps<TData> {
   columns: ColumnDef<TData>[];
   data: TData[];
   pageSize?: number; // Adiciona uma prop opcional para o tamanho da página
+  showSelectionSummary?: boolean; // Adiciona uma prop opcional para mostrar o resumo da seleção
 }
 
-export function DataTable<TData>({ columns, data, pageSize = 10 }: DataTableProps<TData>) { // Define um valor padrão de 10
+export function DataTable<TData>({ columns, data, pageSize = 10, showSelectionSummary = false }: DataTableProps<TData>) { // Define um valor padrão de 10
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
@@ -119,10 +120,12 @@ export function DataTable<TData>({ columns, data, pageSize = 10 }: DataTableProp
         </Table>
       </div>
       <div className="flex items-center justify-between py-4">
-        <div className="text-sm text-muted-foreground">
-          {table.getFilteredSelectedRowModel().rows.length} of{" "}
-          {table.getFilteredRowModel().rows.length} row(s) selected.
-        </div>
+      {showSelectionSummary && ( 
+          <div className="text-sm text-muted-foreground">
+            {table.getFilteredSelectedRowModel().rows.length} of{" "}
+            {table.getFilteredRowModel().rows.length} row(s) selected.
+          </div>
+        )}
         <div className="flex items-center space-x-2">
           <Button
             variant="outline"

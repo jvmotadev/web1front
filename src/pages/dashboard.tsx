@@ -43,7 +43,7 @@ const Dashboard = () => {
           <TransactionList onDataLoaded={setTransactions} />
           {/* Pass the transactions to the DataTable */}
           
-          <DataTable columns={columnsWithSelect} data={transactions} pageSize={10} />
+          <DataTable columns={columnsWithSelect} data={transactions} pageSize={10} showSelectionSummary />
         </div>
       </main>
     </div>
