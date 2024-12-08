@@ -21,13 +21,13 @@ const Graphs = () => {
         <div className="container mx-auto mt-8">
         <Tabs defaultValue="categoria" className="flex-1">
           <TabsList className="grid w-full grid-cols-3">
-            <TabsTrigger value="categoria">
+            <TabsTrigger value="categoria" /* className="text-red-500" */>
               Saídas por Categoria
             </TabsTrigger>
-            <TabsTrigger value="diario">
+            <TabsTrigger value="diario" /* className="text-red-500" */>
               Despesas Diárias
             </TabsTrigger>
-            <TabsTrigger value="entrada">
+            <TabsTrigger value="entrada" /* className="text-green-500" */>
               Entradas por Categoria
             </TabsTrigger>
           </TabsList>

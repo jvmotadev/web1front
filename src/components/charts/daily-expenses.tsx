@@ -29,17 +29,16 @@ const chartConfig = {
 };
 
 export function DailyExpenses() {
-  // Declare hooks at the top level, without conditional rendering
   const { transactions, loading, error } = useTransactions();
-  const [activeChart, setActiveChart] =
-    React.useState<keyof typeof chartConfig>("dailyTotal");
+  const [activeChart, setActiveChart] = React.useState<
+    keyof typeof chartConfig
+  >("dailyTotal");
 
-  // Get today's date and calculate the date 3 months ago
   const today = new Date();
   const threeMonthsAgo = new Date(today);
   threeMonthsAgo.setMonth(today.getMonth() - 3);
 
-  // Filter transactions for exits only and for the last 3 months
+  // Filtra as transações nos últimos 3 meses
   const filteredTransactions = React.useMemo(
     () =>
       transactions.filter((transaction) => {
@@ -53,43 +52,42 @@ export function DailyExpenses() {
     [transactions, threeMonthsAgo, today]
   );
 
-  // Aggregate data by day
-  const aggregatedData = React.useMemo(
-    () =>
-      filteredTransactions.reduce((acc, transaction) => {
-        const formattedDate = new Date(transaction.date).toISOString().split("T")[0];
+  // Agrega transações por dia
+  const aggregatedData = React.useMemo(() => {
+    return filteredTransactions.reduce((acc, transaction) => {
+      const formattedDate = new Date(transaction.date).toISOString().split("T")[0];
 
-        if (!acc[formattedDate]) {
-          acc[formattedDate] = {
-            date: formattedDate,
-            dailyTotal: 0,
-            transactionCount: 0,
-          };
-        }
+      if (!acc[formattedDate]) {
+        acc[formattedDate] = {
+          date: formattedDate,
+          dailyTotal: 0,
+          transactionCount: 0,
+          transactions: [],
+        };
+      }
 
-        acc[formattedDate].dailyTotal += transaction.value;
-        acc[formattedDate].transactionCount += 1;
+      acc[formattedDate].dailyTotal += transaction.value;
+      acc[formattedDate].transactionCount += 1;
+      acc[formattedDate].transactions.push(transaction);
 
-        return acc;
-      }, {} as Record<string, { date: string; dailyTotal: number; transactionCount: number }>),
-    [filteredTransactions]
-  );
+      return acc;
+    }, {} as Record<string, {
+      date: string;
+      dailyTotal: number;
+      transactionCount: number;
+      transactions: { name: string; value: number }[];
+    }>);
+  }, [filteredTransactions]);
 
   const chartData = Object.values(aggregatedData).sort(
-    (a, b) => new globalThis.Date(a.date).getTime() - new globalThis.Date(b.date).getTime()
-  );
-  
-
-  // Calculate overall totals for buttons
-  const total = React.useMemo(
-    () => ({
-      dailyTotal: chartData.reduce((sum, item) => sum + item.dailyTotal, 0),
-      transactionCount: chartData.reduce((sum, item) => sum + item.transactionCount, 0),
-    }),
-    [chartData]
+    (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
   );
 
-  // Handle loading and error states
+  const total = React.useMemo(() => ({
+    dailyTotal: chartData.reduce((sum, item) => sum + item.dailyTotal, 0),
+    transactionCount: chartData.reduce((sum, item) => sum + item.transactionCount, 0),
+  }), [chartData]);
+
   if (loading) {
     return <p>Loading...</p>;
   }
@@ -159,7 +157,7 @@ export function DailyExpenses() {
             <ChartTooltip
               content={
                 <ChartTooltipContent
-                  className="w-[150px]"
+                  className="w-[250px]"
                   labelFormatter={(value) => {
                     if (typeof value === "string") {
                       return new Date(value).toLocaleDateString("en-US", {
@@ -170,23 +168,43 @@ export function DailyExpenses() {
                     }
                     return value;
                   }}
-                  formatter={(
-                    value: string | number | (string | number)[] | null | undefined,
-                    name: string | number | undefined
-                  ) => {
-                    if (typeof value === "number" && typeof name === "string") {
-                      if (name === chartConfig.dailyTotal.label) {
-                        return `R$ ${value.toFixed(2)}`;
-                      }
-                      if (name === chartConfig.transactionCount.label) {
-                        return `${value} transações`;
-                      }
+                  formatter={(value, _name, props) => {
+                    if (props.payload && props.payload.transactions) {
+                      const { transactions, dailyTotal, transactionCount } = props.payload;
+
+                      const transactionDetails = transactions
+                        .map(
+                          (transaction: { name: string; value: number }) =>
+                            `${transaction.name} - ${new Intl.NumberFormat("pt-BR", {
+                              style: "currency",
+                              currency: "BRL",
+                            }).format(transaction.value)}`
+                        )
+                        .join("<br />"); // Adiciona <br /> entre as transações
+
+                      const totalDetails =
+                        activeChart === "transactionCount"
+                          ? `Total de ${transactionCount} transações`
+                          : `Total - ${new Intl.NumberFormat("pt-BR", {
+                              style: "currency",
+                              currency: "BRL",
+                            }).format(dailyTotal)}`;
+
+                      return (
+                        <div
+                          dangerouslySetInnerHTML={{
+                            __html: `${transactionDetails}<br /><br />${totalDetails}`,
+                          }}
+                        />
+                      );
                     }
+
                     return value;
                   }}
                 />
               }
             />
+
             <Bar
               dataKey={activeChart}
               name={chartConfig[activeChart].label}
