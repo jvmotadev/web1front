@@ -1,0 +1,16 @@
+{
+    "prompt": {
+        "saving": {
+            "title":"Poupar dinheiro",
+            "text":"Seu papel é gerar um plano financeiro para que eu viaje no final do ano. Abaixo você receberá os dados financeiros das minhas entradas e saídas. A sua dica deverá conter análises sobre meus gastos (peça 5 dicas financeiras que sejam relevantes neste prompt, você deve escrever elas diretamente). Certifique-se de incluir sugestões práticas que ajudem a ajustar meu orçamento para que eu alcance meu objetivo de viajar com tranquilidade financeira. Dados financeiros: ''' {dados} '''"
+        },
+        "investing": {
+            "title":"Investir dinheiro",
+            "text":"Seu papel é criar um plano de estudo e ação para que eu invista meu dinheiro de forma inteligente e alinhada ao meu perfil financeiro. Abaixo você receberá informações sobre minhas entradas, saídas, e objetivos de longo prazo. A sua análise deve incluir (peça 5 dicas financeiras que sejam relevantes neste prompt, você deve escrever elas diretamente) estratégias de investimento com foco em diversificação, segurança e crescimento sustentável. Dados financeiros: ''' {dados} '''. Meus objetivos são receber dividendos nos próximos 10 anos, me diga quais empresas trabalham com esse modelo de investimento, e utilize informações do Barsi publicas sobre as empresas que ele investe"
+        },
+        "help": {
+            "title":"Quitar Dividas",
+            "text":"Seu papel é elaborar um plano para me ajudar a quitar minhas dívidas e organizar minhas finanças. Abaixo você receberá informações detalhadas sobre minhas entradas, saídas, dívidas e hábitos de consumo. Suas sugestões devem incluir (peça 5 dicas financeiras que sejam relevantes neste prompt, você deve escrever elas diretamente) orientações para redução de gastos, renegociação de dívidas e criação de um orçamento eficiente. Dados financeiros: ''' {dados} '''"
+        }
+    }
+}
