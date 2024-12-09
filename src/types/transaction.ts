@@ -5,5 +5,5 @@ export interface Transaction {
   category: string;
   description: string;
   date: string;
-  type: string; // "entrada" or "saida"
+  type: "entrada" | "saida";// "entrada" or "saida"
 }

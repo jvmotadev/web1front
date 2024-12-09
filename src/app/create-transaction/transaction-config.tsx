@@ -26,6 +26,7 @@ export function useTransactionForm(defaultType: "entrada" | "saida") {
       };
       const createdTransaction = await createTransaction(payload);
       alert("Transação registrada com sucesso!");
+      window.location.reload(); // Recarregar a página para refletir a exclusão
       setFormData({ ...formData, name: "", value: 0, category: "", description: "" });
       return createdTransaction;
     } catch (error) {

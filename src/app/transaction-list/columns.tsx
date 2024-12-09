@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { ArrowUpToLine, ArrowDownToLine } from "lucide-react";
 import { Transaction } from "@/types/transaction"; // Import shared Transaction type
+import { EditTransactionModal } from "../update-transaction/update-transaction";
 
 export const createColumns = (includeSelectColumn: boolean, actions: boolean): ColumnDef<Transaction>[] => {
   const baseColumns: ColumnDef<Transaction>[] = [
@@ -164,6 +165,7 @@ export const createColumns = (includeSelectColumn: boolean, actions: boolean): C
   
         return (
           <div className="flex justify-end">
+            <EditTransactionModal transaction={transaction} />
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" className="h-8 w-8 p-0">
@@ -179,7 +181,6 @@ export const createColumns = (includeSelectColumn: boolean, actions: boolean): C
                 >
                   Copiar Informações
                 </DropdownMenuItem>
-                <DropdownMenuItem>Editar</DropdownMenuItem>
                 <DropdownMenuItem onClick={handleDelete}>
                   Deletar
                 </DropdownMenuItem>
