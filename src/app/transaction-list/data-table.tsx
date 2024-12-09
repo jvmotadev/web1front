@@ -66,7 +66,7 @@ export function DataTable<TData>({ columns, data, pageSize = 10, showSelectionSu
     <div>
       <div className="flex items-center py-4">
         <Input
-          placeholder="Filter by name..."
+          placeholder="Filtrar por nome..."
           value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
             table.getColumn("name")?.setFilterValue(event.target.value)
@@ -122,8 +122,8 @@ export function DataTable<TData>({ columns, data, pageSize = 10, showSelectionSu
       <div className="flex items-center justify-between py-4">
       {showSelectionSummary && ( 
           <div className="text-sm text-muted-foreground">
-            {table.getFilteredSelectedRowModel().rows.length} of{" "}
-            {table.getFilteredRowModel().rows.length} row(s) selected.
+            {table.getFilteredSelectedRowModel().rows.length} de{" "}
+            {table.getFilteredRowModel().rows.length} linhas(s) selecionadas.
           </div>
         )}
         <div className="flex items-center space-x-2">
@@ -133,7 +133,7 @@ export function DataTable<TData>({ columns, data, pageSize = 10, showSelectionSu
             onClick={() => table.previousPage()}
             disabled={!table.getCanPreviousPage()}
           >
-            Previous
+            Anterior
           </Button>
           <Button
             variant="outline"
@@ -141,7 +141,7 @@ export function DataTable<TData>({ columns, data, pageSize = 10, showSelectionSu
             onClick={() => table.nextPage()}
             disabled={!table.getCanNextPage()}
           >
-            Next
+            Próxima
           </Button>
         </div>
       </div>

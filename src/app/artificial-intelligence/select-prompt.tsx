@@ -45,7 +45,7 @@ export function PromptSelect({ onPromptSelected }: PromptSelectProps) {
         </Label>
         <Select onValueChange={handlePromptSelected}>
             <SelectTrigger>
-                <SelectValue placeholder="Select a prompt" />
+                <SelectValue placeholder="Lista de prompts" />
             </SelectTrigger>
             <SelectContent id="prompt_select">
                 {prompts.map((prompt) => (
