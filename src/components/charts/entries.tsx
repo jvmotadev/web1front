@@ -81,34 +81,11 @@ export function EntriesChart() { // Changed from Chart to EntriesChart
     <Card className="border-none flex flex-col">
     <CardContent className="flex-1">
       <div className="flex flex-row justify-around gap-4">
-        {/* Chart for Entries */}
-        <ChartContainer
-          config={entriesChartConfig}
-          className="flex-1 aspect-square max-w-[30%] [&_.recharts-pie-label-text]:fill-foreground"
-        >
-          <PieChart>
-            <Pie
-              className="text-base"
-              data={entriesChartData}
-              dataKey="totalValue"
-              label={({ percentage }) => `${percentage}%`} // Show only the percentage
-              nameKey="category"
-              outerRadius="80%"
-            >
-              <LabelList
-                dataKey="category"
-                className="fill-background"
-                stroke="none"
-                fontSize={18}
-              />
-            </Pie>
-          </PieChart>
-        </ChartContainer>
 
-        {/* Chart for Exits */}
+
         <ChartContainer
             config={entriesChartConfig}
-            className="flex-1 aspect-square max-w-[30%] [&_.recharts-pie-label-text]:fill-foreground"
+            className="flex-1 aspect-square max-w-[40%] [&_.recharts-pie-label-text]:fill-foreground"
           >
             <PieChart>
               <Pie
