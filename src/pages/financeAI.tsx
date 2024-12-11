@@ -11,34 +11,27 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { useState } from "react";
 import { CategoryScroll } from "@/app/artificial-intelligence/category-ignore";
-import { sendPrompt } from "@/app/artificial-intelligence/post-prompt";
 import { PromptSelect } from "@/app/artificial-intelligence/select-prompt";
 import { ModelSelect } from "@/app/artificial-intelligence/select-model";
+import { useCompletion } from "ai/react";
 
 const FinanceAI = () => {
-  const [prompt, setPrompt] = useState(""); // User input
-  const [response, setResponse] = useState(""); // AI response
-  const [isLoading, setIsLoading] = useState(false); // Loading state
+  const [, setPrompt] = useState(""); // User input
 
-  const handleSend = async () => {
-    if (!prompt.trim()) return; // Don't send empty prompts
-    setIsLoading(true);
-    setResponse("");
+  const {
+    completion,
+    input,
+    setInput,
+    isLoading,
+    handleInputChange,
+    handleSubmit,
+  } = useCompletion({
+    api: "http://localhost:3333/ai/complete",
+  });
 
-    try {
-      const result = await sendPrompt(prompt); // Use sendPrompt function
-      setResponse(result); // Assuming the response is the completed prompt
-    } catch (error) {
-      console.error("Error:", error);
-      setResponse("An error occurred. Please try again.");
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  // Handle prompt selection from PromptSelect
   const handlePromptSelected = (selectedTemplate: string) => {
-    setPrompt(selectedTemplate); // Update the prompt textarea with selected template
+    setInput(selectedTemplate); // Atualiza o prompt no hook
+    setPrompt(selectedTemplate); // Sincroniza com o estado local, se necessário
   };
 
   return (
@@ -60,7 +53,7 @@ const FinanceAI = () => {
                   className="rounded-none rounded-tl-sm resize-none p-4 leading-relaxed w-full h-full"
                   placeholder={"Resposta da IA"}
                   readOnly
-                  value={response} // Bind response to this field
+                  value={completion} // Resposta gerenciada pelo hook
                 />
               </div>
             </ResizablePanel>
@@ -70,8 +63,8 @@ const FinanceAI = () => {
                 <Textarea
                   className="rounded-none rounded-bl-sm resize-none p-4 leading-relaxed w-full h-full"
                   placeholder={"Inclua aqui seu prompt"}
-                  value={prompt} // Bind user input to this field
-                  onChange={(e) => setPrompt(e.target.value)} // Update state on input change
+                  value={input} // Bind do hook ao textarea
+                  onChange={handleInputChange} // Atualiza o estado no hook
                 />
               </div>
             </ResizablePanel>
@@ -83,14 +76,8 @@ const FinanceAI = () => {
             <CardContent className="h-full max-h-[668px]">
               <div className="flex flex-col justify-between h-full">
                 <div className="flex flex-col gap-4 w-full">
-
                   <ModelSelect></ModelSelect>
-                  
-
-
-                  <PromptSelect onPromptSelected={handlePromptSelected} /> {/* Use PromptSelect */}
-
-
+                  <PromptSelect onPromptSelected={handlePromptSelected} />
                   <CategoryScroll />
                 </div>
 
@@ -101,7 +88,7 @@ const FinanceAI = () => {
                     disabled={isLoading} // Disable button during loading
                     type="button"
                     className="gap-2 w-full"
-                    onClick={handleSend} // Handle button click
+                    onClick={handleSubmit} // Gatilho do envio
                   >
                     {isLoading ? "Enviando..." : "Enviar"}
                     <SendHorizontal className="w-4 h-4" />
