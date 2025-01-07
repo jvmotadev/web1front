@@ -24,19 +24,20 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { deleteTransaction } from "./delete-transaction";
 
-interface DataTableProps<TData> {
+interface DataTableProps<TData extends { id: string }> {
   columns: ColumnDef<TData>[];
   data: TData[];
   pageSize?: number; // Adiciona uma prop opcional para o tamanho da página
   showSelectionSummary?: boolean; // Adiciona uma prop opcional para mostrar o resumo da seleção
 }
 
-export function DataTable<TData>({ columns, data, pageSize = 10, showSelectionSummary = false }: DataTableProps<TData>) { // Define um valor padrão de 10
+export function DataTable<TData extends { id: string }>({ columns, data, pageSize = 10, showSelectionSummary = false }: DataTableProps<TData>) { 
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
-  const [rowSelection, setRowSelection] = React.useState({});
+  const [rowSelection, setRowSelection] = React.useState<{ [key: string]: boolean }>({});
 
   const table = useReactTable({
     data,
@@ -62,9 +63,31 @@ export function DataTable<TData>({ columns, data, pageSize = 10, showSelectionSu
     },
   });
 
+  // Handler to delete selected transactions
+  const handleDeleteSelected = async () => {
+    const selectedRows = Object.keys(rowSelection)
+      .filter((key) => rowSelection[key]) // Get selected row keys
+      .map((key) => data[parseInt(key)]); // Map keys to data
+
+    if (selectedRows.length === 0) return;
+
+    if (window.confirm("Tem certeza que deseja deletar as transações selecionadas?")) {
+      try {
+        for (const row of selectedRows) {
+          await deleteTransaction(row.id); // Assuming `id` exists in your data type
+        }
+        alert("Transações deletadas com sucesso!");
+        window.location.reload(); // Refresh the page to reflect changes
+      } catch (error) {
+        alert("Erro ao deletar transações.");
+        console.error(error);
+      }
+    }
+  };
+
   return (
     <div>
-      <div className="flex items-center py-4">
+      <div className="flex items-center justify-between py-4">
         <Input
           placeholder="Filtrar por nome..."
           value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
@@ -73,6 +96,9 @@ export function DataTable<TData>({ columns, data, pageSize = 10, showSelectionSu
           }
           className="max-w-sm"
         />
+        {Object.keys(rowSelection).length > 0 && (
+          <Button variant="outline" onClick={handleDeleteSelected}>Deletar</Button>
+        )}
       </div>
       <div className="rounded-md border">
         <Table>
