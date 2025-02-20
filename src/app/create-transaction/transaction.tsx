@@ -94,7 +94,7 @@ export function Transaction() {
                   <SelectValue placeholder="Selecione uma categoria" />
                 </SelectTrigger>
                 <SelectContent>
-                <SelectItem value="alimentacao">Alimentação</SelectItem>
+                      <SelectItem value="alimentacao">Alimentação</SelectItem>
                       <SelectItem value="transporte">Transporte</SelectItem>
                       <SelectItem value="roupas">Roupas</SelectItem>
                       <SelectItem value="moradia">Moradia</SelectItem>

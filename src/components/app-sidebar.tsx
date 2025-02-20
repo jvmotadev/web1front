@@ -9,7 +9,7 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { useSidebar } from "@/components/ui/sidebar";
-import { LayoutDashboard, TrendingDown, TrendingUp, ChartNoAxesCombined, Bot } from "lucide-react";
+import { LayoutDashboard, TrendingDown, TrendingUp, ChartNoAxesCombined, Bot, BellRing } from "lucide-react";
 
 // Menu items.
 const items = [
@@ -27,6 +27,11 @@ const items = [
     title: "Saidas",
     url: "./out",
     icon: TrendingDown,
+  },
+  {
+    title: "Assinaturas",
+    url: "./subscriptions",
+    icon: BellRing,
   },
   {
     title: "Charts",
